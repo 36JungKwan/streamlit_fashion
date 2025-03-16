@@ -7,11 +7,11 @@ import pickle
 import chardet
 
 # Load trained model
-with open(r"C:\Users\dotru\STUDIE\4_Spring2025\DAP391m\Project\predict\fashion_trend_model.pkl", "rb") as file:
+with open("fashion_trend_model.pkl", "rb") as file:
     model = pickle.load(file)
 
 # Load encoders
-with open(r"C:\Users\dotru\STUDIE\4_Spring2025\DAP391m\Project\predict\encoders.pkl", "rb") as file:
+with open("encoders.pkl", "rb") as file:
     encoders = pickle.load(file)
 
 def read_file(uploaded_file):
