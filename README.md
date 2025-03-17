@@ -1,6 +1,6 @@
 # Machine Learning-based Trend Forecasting
 
-### This project leverages XGBoost Classifier to predict fashion trends by analyzing product attributes such as color, size, and style. The goal is to help fashion businesses optimize production strategies and enhance customer satisfaction.
+This project leverages XGBoost Classifier to predict fashion trends by analyzing product attributes such as color, size, and style. The goal is to help fashion businesses optimize production strategies and enhance customer satisfaction.
 
 ### How to Run
 
