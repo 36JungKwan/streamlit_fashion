@@ -6,7 +6,7 @@ This project leverages XGBoost Classifier to predict fashion trends by analyzing
 
 - Clone the repository:
 
-    git clone https://github.com/your-repo/fashion-trend-forecasting.git
+    git clone https://github.com/36JungKwan/streamlit_fashion
 
 - Install dependencies:
 
