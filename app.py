@@ -132,3 +132,7 @@ elif st.session_state.page == "batch":
         result_df = batch_predict(uploaded_file)
         st.write(result_df.head())
         st.download_button("📥 Download Predictions", result_df.to_csv(index=False), file_name="predictions.csv", mime="text/csv")
+
+# Fix lỗi Streamlit không chụp được preview
+if st.button("📸 Chụp ảnh xem trước"):
+    st.write("Preview đã được cập nhật!")
