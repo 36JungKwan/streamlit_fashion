@@ -19,6 +19,7 @@
 ### Streamlit Deployment
 
 The web app is deployed on Streamlit Cloud. Access it here: [Streamlit Web App](https://fashionn.streamlit.app/)
+
 Data sample for web testing: [Data sample](https://drive.google.com/file/d/1zxI2KJoxPOXxZL406qfLOf4Aek7-QR-C/view?usp=drive_link)
 
 
