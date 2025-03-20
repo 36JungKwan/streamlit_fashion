@@ -33,6 +33,38 @@ def read_file(uploaded_file):
     
     return df
 
+def explore_dataframe(df):
+    # Shape
+    shape_info = pd.DataFrame({"Shape of dataframe": [f"Total: {df.shape[0]} rows, {df.shape[1]} columns"]})
+    shape_info = shape_info.replace(np.nan, "-")
+
+    # Data Types
+    data_types_info = df.dtypes.to_frame().reset_index().rename(columns={"index": "Data Type", 0: ""})
+
+    # Missing Values
+    missing_values_info = df.isnull().sum().to_frame().reset_index().rename(columns={"index": "Missing Values", 0: ""})
+    missing_values_info["Missing Values"] = missing_values_info["Missing Values"].fillna("-")
+
+    # Duplicate Rows
+    duplicate_rows_info = pd.DataFrame({"Duplicate rows in dataframe": [f"Total: {df.duplicated().sum()}"]})
+    duplicate_rows_info = duplicate_rows_info.replace(np.nan, "-")
+
+     # Unique Values
+    unique_values_info = df.nunique().to_frame().reset_index().rename(columns={"index": "Column", 0: "Unique Values"})
+
+    # Describe
+    describe_info = df.describe().transpose().reset_index().rename(columns={"index": "Column"})
+
+    # Concatenate tables
+    info_table = pd.concat([data_types_info, missing_values_info, unique_values_info,shape_info], axis=1) #shape_info
+
+    # Display tables
+    st.subheader("🔍 Data Preview")
+    st.write(df.head())
+    st.subheader("🧮 Data Exploring")
+    st.write(df.describe(include = 'all'))
+    st.write(info_table)
+
 # Function to preprocess input data
 def preprocess_input(data):
     categorical_features = ['Brand', 'Category', 'Style Attributes', 'Color', 'Season']
@@ -51,8 +83,6 @@ def inverse_transform(df):
 
 # Function for data visualization
 def visualize_data(df):
-    st.subheader("🔍 Data Preview")
-    st.write(df.head())
     st.subheader("Feature Distributions")
     selected_feature = st.selectbox("Select a feature to visualize", df.columns)
     st.write(f'📈 Distribution of {selected_feature}')
@@ -129,6 +159,7 @@ elif st.session_state.page == "analysis":
         st.session_state.analysis_file = uploaded_file
     if st.session_state.analysis_file is not None:
         df = read_file(st.session_state.analysis_file)
+        explore_dataframe(df)
         visualize_data(df)
     else:
         st.warning("Please upload a file first!")
