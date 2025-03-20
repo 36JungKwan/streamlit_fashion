@@ -57,7 +57,7 @@ def explore_dataframe(df):
     info_table = pd.merge(info_table, unique_values_info, on="Column", how="outer")
 
     # Append shape and duplicate row info at the bottom
-    extra_info = pd.concat([shape_info, duplicate_rows_info], ignore_index=True)
+    extra_info = pd.concat([shape_info, duplicate_rows_info])
 
     # Display tables
     st.subheader("🔍 Data Preview")
