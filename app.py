@@ -133,7 +133,7 @@ elif st.session_state.page == "analysis":
 
 elif st.session_state.page == "batch":
     st.header("🤖 Batch Prediction")
-    uploaded_file = st.file_uploader("Upload CSV", type=["csv", "xls", "xlsx"])
+    uploaded_file = st.file_uploader("Upload a CSV file for predicting", type=["csv", "xls", "xlsx"])
     if uploaded_file is not None:
         st.session_state.uploaded_file = uploaded_file
     if st.session_state.uploaded_file is not None:
