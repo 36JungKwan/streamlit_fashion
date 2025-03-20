@@ -35,7 +35,7 @@ def read_file(uploaded_file):
 
 def explore_dataframe(df):
     # Shape
-    shape_info = pd.DataFrame({"Shape of dataframe": [f"Total: {df.shape[0]} rows, {df.shape[1]} columns"]})
+    shape_info = pd.DataFrame({"Shape of data": [f"Total: {df.shape[0]} rows, {df.shape[1]} columns"]})
     shape_info = shape_info.replace(np.nan, "-")
 
     # Data Types
@@ -58,7 +58,6 @@ def explore_dataframe(df):
 
     # Append shape and duplicate row info at the bottom
     extra_info = pd.concat([shape_info, duplicate_rows_info], ignore_index=True)
-    info_table = pd.concat([info_table, extra_info], ignore_index=True)
 
     # Display tables
     st.subheader("🔍 Data Preview")
@@ -67,6 +66,7 @@ def explore_dataframe(df):
     st.write(df.describe(include = 'all'))
     st.subheader("🧮 Overview Info")
     st.write(info_table)
+    st.write(extra_info)
 
 # Function to preprocess input data
 def preprocess_input(data):
