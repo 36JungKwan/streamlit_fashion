@@ -57,7 +57,8 @@ def explore_dataframe(df):
     info_table = pd.merge(info_table, unique_values_info, on="Column", how="outer")
 
     # Append shape and duplicate row info at the bottom
-    extra_info = pd.concat([shape_info, duplicate_rows_info])
+    extra_info = pd.concat([shape_info, duplicate_rows_info], ignore_index = True)
+    info_table = pd.concat([info_table, extra_info], ignore_index = True)
 
     # Display tables
     st.subheader("🔍 Data Preview")
@@ -66,7 +67,6 @@ def explore_dataframe(df):
     st.write(df.describe(include = 'all'))
     st.subheader("🧮 Overview Info")
     st.write(info_table)
-    st.write(extra_info)
 
 # Function to preprocess input data
 def preprocess_input(data):
