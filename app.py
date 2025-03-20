@@ -91,6 +91,7 @@ def visualize_data(df):
     st.write(f'📈 Distribution of {selected_feature}')
     fig, ax = plt.subplots()
     sns.histplot(df[selected_feature], bins=30, kde=True, ax=ax)
+    plt.xticks(rotation=45, ha='right')  # Xoay chữ & căn phải
     st.pyplot(fig)
 
 # Function to make predictions
@@ -108,8 +109,8 @@ def batch_predict(uploaded_file):
     predictions = model.predict(processed_df)
     probability = model.predict_proba(processed_df)[:,1]
     df['Prediction'] = ["Trend" if p == 1 else "Not Trend" for p in predictions]
-    df['Probability'] = probability*100
-    df["Probability"] = df["Probability"].apply(lambda x: f"{x:.2f}%")
+    df['Trend Probability'] = probability*100
+    df["Trend Probability"] = df["Trend Probability"].apply(lambda x: f"{x:.2f}%")
     # Chuyển từ dạng số về dạng chữ
     df_final = inverse_transform(df)
     return df_final
