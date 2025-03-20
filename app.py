@@ -46,7 +46,7 @@ def explore_dataframe(df):
     missing_values_info["Missing Values"] = missing_values_info["Missing Values"].fillna("-")
 
     # Duplicate Rows
-    duplicate_rows_info = pd.DataFrame({"Column": ["Duplicate Rows"], "Value": [df.duplicated().sum()]})
+    duplicate_rows_info = pd.DataFrame({"Duplicate Rows": [df.duplicated().sum()]})
     duplicate_rows_info = duplicate_rows_info.replace(np.nan, "-")
 
     # Unique Values
