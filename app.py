@@ -51,7 +51,7 @@ def inverse_transform(df):
 
 # Function for data visualization
 def visualize_data(df):
-    st.subheader("🔍 Data Overview")
+    st.subheader("🔍 Data Preview")
     st.write(df.head())
     st.subheader("Feature Distributions")
     selected_feature = st.selectbox("Select a feature to visualize", df.columns)
@@ -86,6 +86,8 @@ def batch_predict(uploaded_file):
 st.title("🕺 Fashion Trend Prediction 💃")
 if "page" not in st.session_state:
     st.session_state.page = "analysis"
+if "uploaded_file" not in st.session_state:
+    st.session_state.uploaded_file = None
 
 # Tạo nút điều hướng
 st.sidebar.title("📜 Menu")
@@ -122,15 +124,23 @@ elif st.session_state.page == "analysis":
     st.header("📊 Data Analysis and Visualization")
     uploaded_file = st.file_uploader("Upload a CSV file for analysis", type=["csv", "xls", "xlsx"])
     if uploaded_file is not None:
-        df = read_file(uploaded_file)
+        st.session_state.uploaded_file = uploaded_file
+    if st.session_state.uploaded_file is not None:
+        df = read_file(st.session_state.uploaded_file)
         visualize_data(df)
+    else:
+        st.warning("Please upload a file first!")
 
 elif st.session_state.page == "batch":
     st.header("🤖 Batch Prediction")
     uploaded_file = st.file_uploader("Upload CSV", type=["csv", "xls", "xlsx"])
     if uploaded_file is not None:
+        st.session_state.uploaded_file = uploaded_file
+    if st.session_state.uploaded_file is not None:
         result_df = batch_predict(uploaded_file)
         st.write(result_df.head())
         st.download_button("📥 Download Predictions", result_df.to_csv(index=False), file_name="predictions.csv", mime="text/csv")
-
+    else:
+        st.warning("Please upload a file first!")
+        
 st.markdown('<div style="visibility: hidden;">Fix preview bug</div>', unsafe_allow_html=True)
