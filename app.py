@@ -39,30 +39,33 @@ def explore_dataframe(df):
     shape_info = shape_info.replace(np.nan, "-")
 
     # Data Types
-    data_types_info = df.dtypes.to_frame().reset_index().rename(columns={"index": "Data Type", 0: ""})
+    data_types_info = df.dtypes.to_frame().reset_index().rename(columns={"index": "Column", 0: "Data Type"})
 
     # Missing Values
-    missing_values_info = df.isnull().sum().to_frame().reset_index().rename(columns={"index": "Missing Values", 0: ""})
+    missing_values_info = df.isnull().sum().to_frame().reset_index().rename(columns={"index": "Column", 0: "Missing Values"})
     missing_values_info["Missing Values"] = missing_values_info["Missing Values"].fillna("-")
 
     # Duplicate Rows
-    duplicate_rows_info = pd.DataFrame({"Duplicate rows in dataframe": [f"Total: {df.duplicated().sum()}"]})
+    duplicate_rows_info = pd.DataFrame({"Column": ["Duplicate Rows"], "Value": [df.duplicated().sum()]})
     duplicate_rows_info = duplicate_rows_info.replace(np.nan, "-")
 
-     # Unique Values
+    # Unique Values
     unique_values_info = df.nunique().to_frame().reset_index().rename(columns={"index": "Column", 0: "Unique Values"})
 
-    # Describe
-    describe_info = df.describe().transpose().reset_index().rename(columns={"index": "Column"})
+    # Merge all tables into one
+    info_table = pd.merge(data_types_info, missing_values_info, on="Column", how="outer")
+    info_table = pd.merge(info_table, unique_values_info, on="Column", how="outer")
 
-    # Concatenate tables
-    info_table = pd.concat([data_types_info, missing_values_info, unique_values_info,shape_info], axis=1) #shape_info
+    # Append shape and duplicate row info at the bottom
+    extra_info = pd.concat([shape_info, duplicate_rows_info], ignore_index=True)
+    info_table = pd.concat([info_table, extra_info], ignore_index=True)
 
     # Display tables
     st.subheader("🔍 Data Preview")
     st.write(df)
-    st.subheader("🧮 Data Exploring")
+    st.subheader("📈 Statistical Summary")
     st.write(df.describe(include = 'all'))
+    st.subheader("🧮 Overview Info")
     st.write(info_table)
 
 # Function to preprocess input data
