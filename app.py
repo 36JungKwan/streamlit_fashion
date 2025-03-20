@@ -60,7 +60,7 @@ def explore_dataframe(df):
 
     # Display tables
     st.subheader("🔍 Data Preview")
-    st.write(df.head())
+    st.write(df)
     st.subheader("🧮 Data Exploring")
     st.write(df.describe(include = 'all'))
     st.write(info_table)
@@ -171,7 +171,8 @@ elif st.session_state.page == "batch":
         st.session_state.batch_file = uploaded_file
     if st.session_state.batch_file is not None:
         result_df = batch_predict(st.session_state.batch_file)
-        st.write(result_df.head())
+        st.subheader("🔎 Prediction Preview")
+        st.write(result_df)
         st.download_button("📥 Download Predictions", result_df.to_csv(index=False), file_name="predictions.csv", mime="text/csv")
     else:
         st.warning("Please upload a file first!")
